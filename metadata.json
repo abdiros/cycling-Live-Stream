@@ -1,0 +1,6 @@
+{
+  "name": "Vidéos de Cyclisme",
+  "description": "Plateforme moderne de diffusion en direct de courses cyclistes avec profils d'étapes interactifs, clavardage en direct pour les fans et guides d'optimisation SEO.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
