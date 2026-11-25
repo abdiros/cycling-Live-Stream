@@ -45,7 +45,7 @@ export default function LivePlayer() {
           <p className="text-neutral-400 text-xs leading-relaxed">
             Click here to{" "}
             <a
-              href="https://arwebsol.blogspot.com/"
+              href="https://firstcycling.blogspot.com/"
               rel="nofollow"
               target="_blank"
               className="text-red-500 font-bold hover:underline inline-flex items-center gap-0.5"
