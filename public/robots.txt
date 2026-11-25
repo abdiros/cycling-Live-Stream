@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://cyclinglivestream.com/sitemap.xml
+Sitemap: https://www.cyclinglivestream.com/sitemap.xml

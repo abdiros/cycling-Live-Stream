@@ -25,10 +25,11 @@ export default function LivePlayer() {
       <div className="relative aspect-video w-full bg-black flex items-center justify-center group overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
           <iframe
-            src="https://www.elahmad.ru/tv/live/shahid_shaka.php?id=abudhabi_sports_1"
-            title="Cycling Live Stream"
+            src="https://freetv.studio/embed/Eurosport2.fr"
+            title="Cycling Live Stream — Eurosport 2"
             className="w-full h-full border-0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           ></iframe>
         </div>
