@@ -132,6 +132,10 @@ export default function App() {
 
     setMeta('meta[name="description"]', description);
     setMeta('meta[name="keywords"]', keywords);
+    setMeta(
+      'meta[name="robots"]',
+      "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    );
     setMeta('meta[property="og:title"]', title);
     setMeta('meta[property="og:description"]', description);
     setMeta('meta[property="og:url"]', canonicalUrl);
