@@ -30,14 +30,6 @@ export default function ContactPage({ onBack }: ContactPageProps) {
 
   const subjectLabel = SUBJECT_LABELS[formData.subject] || formData.subject;
 
-  const buildMailtoHref = () => {
-    const mailSubject = encodeURIComponent(`[Cycling Live Stream] ${subjectLabel} - ${formData.name}`);
-    const mailBody = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\nSubject: ${subjectLabel}\n\nMessage:\n${formData.message}`
-    );
-    return `mailto:${TARGET_EMAIL}?subject=${mailSubject}&body=${mailBody}`;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
@@ -83,7 +75,7 @@ export default function ContactPage({ onBack }: ContactPageProps) {
       const message =
         err instanceof Error && err.message
           ? err.message
-          : "Network error while sending your message. Please try again or email us directly.";
+          : "Network error while sending your message. Please try again.";
       setErrorMessage(message);
     } finally {
       setIsSending(false);
@@ -119,7 +111,7 @@ export default function ContactPage({ onBack }: ContactPageProps) {
           <CheckCircle2 className="h-10 w-10 text-emerald-400" />
           <h2 className="font-display font-bold text-lg text-white uppercase">Message Sent Successfully!</h2>
           <p className="text-xs max-w-md text-emerald-300">
-            Thank you, {formData.name}. Your message regarding &quot;{subjectLabel}&quot; has been delivered to our team at {TARGET_EMAIL}. We will reply to {formData.email} as soon as possible.
+            Thank you, {formData.name}. Your message regarding &quot;{subjectLabel}&quot; has been received by our team. We will reply to {formData.email} as soon as possible.
           </p>
           <button
             onClick={() => {
@@ -203,17 +195,9 @@ export default function ContactPage({ onBack }: ContactPageProps) {
             </div>
 
             {errorMessage && (
-              <div className="bg-red-950/60 border border-red-800 rounded p-3 text-xs text-red-200 flex flex-col gap-2">
-                <div className="flex items-start gap-2">
-                  <AlertCircle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
-                  <span>{errorMessage}</span>
-                </div>
-                <a
-                  href={buildMailtoHref()}
-                  className="self-start text-red-300 underline hover:text-white font-mono text-[11px]"
-                >
-                  Open in your email app ({TARGET_EMAIL})
-                </a>
+              <div className="bg-red-950/60 border border-red-800 rounded p-3 text-xs text-red-200 flex items-start gap-2">
+                <AlertCircle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
+                <span>{errorMessage}</span>
               </div>
             )}
 
@@ -236,17 +220,14 @@ export default function ContactPage({ onBack }: ContactPageProps) {
             </button>
           </form>
 
-          <div className="bg-neutral-950 p-5 rounded-lg border border-neutral-800 flex flex-col gap-4 text-xs text-neutral-400">
+          <div className="bg-neutral-950 p-5 rounded-lg border border-neutral-800 flex flex-col gap-4 text-xs text-neutral-400 self-start">
             <h3 className="font-display font-bold text-sm text-white uppercase flex items-center gap-2">
               <MessageSquare className="h-4 w-4 text-red-500" />
-              Direct Contact Details
+              Support Guidelines
             </h3>
-            <div className="flex flex-col gap-2 font-mono">
-              <span className="text-neutral-300 font-bold">Direct Email:</span>
-              <a href={`mailto:${TARGET_EMAIL}`} className="text-red-500 hover:underline break-all">
-                {TARGET_EMAIL}
-              </a>
-            </div>
+            <p className="text-xs leading-relaxed text-neutral-400">
+              Use the contact form to reach our team for stream reports, schedule questions, or partnership inquiries. We respond directly to the email address you provide.
+            </p>
 
             <div className="border-t border-neutral-800 pt-3 flex items-start gap-2 text-[11px] leading-relaxed text-neutral-500">
               <AlertCircle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
