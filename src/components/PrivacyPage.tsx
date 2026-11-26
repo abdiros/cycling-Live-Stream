@@ -58,7 +58,7 @@ export default function PrivacyPage({ onBack }: PrivacyPageProps) {
           </h2>
           <p>
             In accordance with the General Data Protection Regulation (GDPR), you have the right to access, rectify, and erase any personal data concerning you by contacting{" "}
-            <a href="mailto:contact@cyclinglivestream.com" className="text-red-500 hover:underline">
+            <a href="mailto:arwebsupport@gmail.com" className="text-red-500 hover:underline">
               contact@cyclinglivestream.com
             </a>
             .

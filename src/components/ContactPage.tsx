@@ -134,7 +134,7 @@ export default function ContactPage({ onBack }: ContactPageProps) {
             </h3>
             <div className="flex flex-col gap-2 font-mono">
               <span className="text-neutral-300 font-bold">Direct Email:</span>
-              <a href="mailto:contact@cyclinglivestream.com" className="text-red-500 hover:underline">
+              <a href="mailto:arwebsupport@gmail.com" className="text-red-500 hover:underline">
                 contact@cyclinglivestream.com
               </a>
             </div>

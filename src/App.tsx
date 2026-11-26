@@ -24,8 +24,9 @@ import AboutPage from "./components/AboutPage";
 import ContactPage from "./components/ContactPage";
 import MentionsLegales from "./components/MentionsLegales";
 import PrivacyPage from "./components/PrivacyPage";
+import CyclingTodayLive, { TIZ_CYCLING_FAQS } from "./components/CyclingTodayLive";
 
-type PageType = "home" | "about" | "contact" | "legal-notice" | "privacy" | "seo-page";
+type PageType = "home" | "about" | "contact" | "legal-notice" | "privacy" | "tiz-cycling-live" | "seo-page";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>("home");
@@ -51,6 +52,9 @@ export default function App() {
       } else if (pageParam === "privacy" || pageParam === "confidentialite") {
         setCurrentPage("privacy");
         setSelectedSEOPage(null);
+      } else if (pageParam === "tiz-cycling-live" || pageParam === "cycling-today-live") {
+        setCurrentPage("tiz-cycling-live");
+        setSelectedSEOPage(null);
       } else if (pageParam) {
         const legacySlugMap: Record<string, string> = {
           "cyclisme-en-direct-streaming-gratuit": "watch-cycling-live-stream-free"
@@ -75,46 +79,96 @@ export default function App() {
     return () => window.removeEventListener("popstate", handleUrlChange);
   }, []);
 
-  // Update dynamic document title, description meta, and canonical link
+  // Update dynamic document title, description, keywords, OG/Twitter tags, canonical link, and FAQPage JSON-LD
   useEffect(() => {
-    let title = "Cycling Live Stream - Watch Free Pro Cycling Races HD | cyclinglivestream.com";
-    let description = "Watch free cycling live streams online in HD at cyclinglivestream.com. Live broadcasts, official TV channels, and pro cycling streaming guides.";
-    let canonicalUrl = "https://cyclinglivestream.com/";
+    let title = "Cycling Live Stream";
+    let description = "Modern live streaming platform for cycling races with interactive stage profiles, live fan chat, and SEO optimization guides.";
+    let keywords = "cycling live stream, cyclinglivestream, watch cycling live free, pro cycling streaming, tour de france live stream, cycling tv online";
+    let canonicalUrl = "https://www.cyclinglivestream.com/";
 
     if (currentPage === "about") {
       title = "About Us - Cycling Live Stream | cyclinglivestream.com";
       description = "Learn about Cycling Live Stream (cyclinglivestream.com), the independent live broadcast portal for professional road cycling.";
-      canonicalUrl = "https://cyclinglivestream.com/?page=about";
+      canonicalUrl = "https://www.cyclinglivestream.com/?page=about";
     } else if (currentPage === "contact") {
       title = "Contact - Cycling Live Stream | Support & Stream Reports";
       description = "Contact the Cycling Live Stream team at cyclinglivestream.com for inquiries, broken stream reports, or media partnerships.";
-      canonicalUrl = "https://cyclinglivestream.com/?page=contact";
+      canonicalUrl = "https://www.cyclinglivestream.com/?page=contact";
     } else if (currentPage === "legal-notice") {
       title = "Legal Notice - Cycling Live Stream | cyclinglivestream.com";
       description = "View the legal notice and terms of use for Cycling Live Stream (cyclinglivestream.com).";
-      canonicalUrl = "https://cyclinglivestream.com/?page=legal-notice";
+      canonicalUrl = "https://www.cyclinglivestream.com/?page=legal-notice";
     } else if (currentPage === "privacy") {
       title = "Privacy Policy - Cycling Live Stream | cyclinglivestream.com";
       description = "Privacy policy and GDPR personal data protection disclosures for Cycling Live Stream (cyclinglivestream.com).";
-      canonicalUrl = "https://cyclinglivestream.com/?page=privacy";
+      canonicalUrl = "https://www.cyclinglivestream.com/?page=privacy";
+    } else if (currentPage === "tiz-cycling-live") {
+      title = "Tiz Cycling Live Stream 2026 – TV, YouTube, Tour de France & World Championship";
+      description = "Watch Tiz Cycling live stream 2026 in HD. Find Tiz Cycling live today, Tiz Cycling TV, YouTube streams, Tour de France, World Championship & Tiz Cycling down backups.";
+      keywords = "tiz cycling live, tiz cycling live stream, tiz cycling tv, tiz cycling youtube, tiz cycling live stream youtube, tiz cycling live stream 2026, tiz cycling live today, tiz cycling down, tiz cycling tour de france, tiz cycling world championship";
+      canonicalUrl = "https://www.cyclinglivestream.com/?page=tiz-cycling-live";
     } else if (currentPage === "seo-page" && selectedSEOPage) {
       title = selectedSEOPage.title;
       description = selectedSEOPage.metaDescription;
-      canonicalUrl = `https://cyclinglivestream.com/?page=${selectedSEOPage.slug}`;
+      if (selectedSEOPage.metaKeywords) {
+        keywords = selectedSEOPage.metaKeywords;
+      } else if (selectedSEOPage.tags.length > 0) {
+        keywords = selectedSEOPage.tags.join(", ");
+      }
+      canonicalUrl = `https://www.cyclinglivestream.com/?page=${selectedSEOPage.slug}`;
     }
 
     document.title = title;
 
-    // Update canonical link in DOM
     const canonicalTag = document.getElementById("canonical-link") as HTMLLinkElement | null;
     if (canonicalTag) {
       canonicalTag.href = canonicalUrl;
     }
 
-    // Update meta description
-    const descMeta = document.querySelector('meta[name="description"]');
-    if (descMeta) {
-      descMeta.setAttribute("content", description);
+    const setMeta = (selector: string, content: string) => {
+      const el = document.querySelector(selector);
+      if (el) el.setAttribute("content", content);
+    };
+
+    setMeta('meta[name="description"]', description);
+    setMeta('meta[name="keywords"]', keywords);
+    setMeta('meta[property="og:title"]', title);
+    setMeta('meta[property="og:description"]', description);
+    setMeta('meta[property="og:url"]', canonicalUrl);
+    setMeta('meta[name="twitter:title"]', title);
+    setMeta('meta[name="twitter:description"]', description);
+    setMeta('meta[name="twitter:url"]', canonicalUrl);
+
+    const existingFaqScript = document.getElementById("dynamic-faq-jsonld");
+    if (existingFaqScript) {
+      existingFaqScript.remove();
+    }
+
+    const activeFaqs =
+      currentPage === "tiz-cycling-live"
+        ? TIZ_CYCLING_FAQS
+        : currentPage === "seo-page" && selectedSEOPage
+        ? selectedSEOPage.faqs
+        : [];
+
+    if (activeFaqs.length > 0) {
+      const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: activeFaqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer
+          }
+        }))
+      };
+      const script = document.createElement("script");
+      script.id = "dynamic-faq-jsonld";
+      script.type = "application/ld+json";
+      script.textContent = JSON.stringify(faqSchema);
+      document.head.appendChild(script);
     }
   }, [currentPage, selectedSEOPage]);
 
@@ -137,6 +191,9 @@ export default function App() {
       setSelectedSEOPage(null);
     } else if (pageParam === "privacy") {
       setCurrentPage("privacy");
+      setSelectedSEOPage(null);
+    } else if (pageParam === "tiz-cycling-live" || pageParam === "cycling-today-live") {
+      setCurrentPage("tiz-cycling-live");
       setSelectedSEOPage(null);
     } else if (seoPage) {
       setSelectedSEOPage(seoPage);
@@ -213,10 +270,14 @@ export default function App() {
             {[
               { id: null, label: "HOME", href: "/" },
               { id: null, label: "LIVE STREAM", badge: true, href: "/" },
+              { id: "cycling-today-live-stream", label: "CYCLING TODAY", href: "?page=cycling-today-live-stream" },
+              { id: "tiz-cycling-live", label: "TIZ CYCLING LIVE", href: "?page=tiz-cycling-live" },
               { id: "about", label: "ABOUT", href: "?page=about" },
               { id: "contact", label: "CONTACT", href: "?page=contact" },
             ].map((tab, idx) => {
               const isActive = (tab.id === null && currentPage === "home") ||
+                               (tab.id === "cycling-today-live-stream" && currentPage === "seo-page" && selectedSEOPage?.slug === "cycling-today-live-stream") ||
+                               (tab.id === "tiz-cycling-live" && currentPage === "tiz-cycling-live") ||
                                (tab.id === "about" && currentPage === "about") ||
                                (tab.id === "contact" && currentPage === "contact");
 
@@ -275,6 +336,15 @@ export default function App() {
             </motion.div>
           )}
 
+          {currentPage === "tiz-cycling-live" && (
+            <motion.div key="tiz-cycling-live" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+              <CyclingTodayLive
+                onBack={() => navigateTo(null)}
+                onNavigateGuide={(slug) => navigateTo(slug)}
+              />
+            </motion.div>
+          )}
+
           {currentPage === "seo-page" && selectedSEOPage && (
             <motion.div
               key={selectedSEOPage.slug}
@@ -308,9 +378,32 @@ export default function App() {
               </h1>
 
               {/* Intro */}
-              <div className="text-neutral-300 text-sm leading-relaxed border-l-4 border-red-600 pl-4 bg-neutral-950/40 p-4 rounded-r">
+              <div className="text-neutral-300 text-sm leading-relaxed border-l-4 border-red-600 pl-4 bg-neutral-950/40 p-4 rounded-r flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <p>{selectedSEOPage.introduction}</p>
+                <button
+                  onClick={() => navigateTo(null)}
+                  className="shrink-0 inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-display font-bold uppercase text-xs tracking-wider px-4 py-2.5 rounded transition-all cursor-pointer"
+                >
+                  <Play className="h-3.5 w-3.5 fill-current" />
+                  Watch Live Now
+                </button>
               </div>
+
+              {/* Editorial SEO Sections */}
+              {selectedSEOPage.sections && selectedSEOPage.sections.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {selectedSEOPage.sections.map((section, idx) => (
+                    <section key={idx} className="bg-neutral-950/60 border border-neutral-800 rounded-lg p-4 flex flex-col gap-2">
+                      <h2 className="font-display font-bold text-sm text-white uppercase tracking-wide">
+                        {section.heading}
+                      </h2>
+                      <p className="text-neutral-400 text-xs leading-relaxed">
+                        {section.body}
+                      </p>
+                    </section>
+                  ))}
+                </div>
+              )}
 
               {/* Broadcasters Table */}
               <div className="bg-neutral-950/80 rounded-lg border border-neutral-800 p-5">
@@ -499,6 +592,16 @@ export default function App() {
             </div>
 
             <div className="flex flex-wrap items-center gap-4 font-mono text-[10px]">
+              <a
+                href="?page=tiz-cycling-live"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigateTo("tiz-cycling-live");
+                }}
+                className="hover:text-white cursor-pointer"
+              >
+                Tiz Cycling Live
+              </a>
               <a
                 href="?page=about"
                 onClick={(e) => {

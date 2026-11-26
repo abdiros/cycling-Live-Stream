@@ -41,7 +41,7 @@ export default function MentionsLegales({ onBack }: MentionsLegalesProps) {
           </p>
           <p>
             Editorial contact:{" "}
-            <a href="mailto:contact@cyclinglivestream.com" className="text-red-500 hover:underline">
+            <a href="mailto:arwebsupport@gmail.com" className="text-red-500 hover:underline">
               contact@cyclinglivestream.com
             </a>
           </p>
