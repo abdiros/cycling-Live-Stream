@@ -81,9 +81,9 @@ export default function App() {
 
   // Update dynamic document title, description, keywords, OG/Twitter tags, canonical link, and FAQPage JSON-LD
   useEffect(() => {
-    let title = "Cycling Live Stream";
-    let description = "Modern live streaming platform for cycling races with interactive stage profiles, live fan chat, and SEO optimization guides.";
-    let keywords = "cycling live stream, cyclinglivestream, watch cycling live free, pro cycling streaming, tour de france live stream, cycling tv online";
+    let title = "Cycling Live Stream – Watch Free Live Pro Cycling HD";
+    let description = "Watch free live cycling streams, Eurosport race coverage, Grand Tours, and UCI WorldTour broadcasts in HD on cyclinglivestream.com.";
+    let keywords = "cycling live stream, cyclinglivestream, watch cycling live free, pro cycling streaming, tour de france live stream, cycling tv online, cycling today live, tiz cycling live";
     let canonicalUrl = "https://www.cyclinglivestream.com/";
 
     if (currentPage === "about") {
@@ -120,10 +120,14 @@ export default function App() {
 
     document.title = title;
 
-    const canonicalTag = document.getElementById("canonical-link") as HTMLLinkElement | null;
-    if (canonicalTag) {
-      canonicalTag.href = canonicalUrl;
+    let canonicalTag = document.getElementById("canonical-link") as HTMLLinkElement | null;
+    if (!canonicalTag) {
+      canonicalTag = document.createElement("link");
+      canonicalTag.id = "canonical-link";
+      canonicalTag.rel = "canonical";
+      document.head.appendChild(canonicalTag);
     }
+    canonicalTag.href = canonicalUrl;
 
     const setMeta = (selector: string, content: string) => {
       const el = document.querySelector(selector);
@@ -178,7 +182,7 @@ export default function App() {
 
   // Client-side Navigation helper
   const navigateTo = (pageParam: string | null, seoPage: SEOPage | null = null) => {
-    const targetUrl = pageParam ? `?page=${pageParam}` : window.location.pathname;
+    const targetUrl = pageParam ? `/?page=${pageParam}` : "/";
     window.history.pushState({}, "", targetUrl);
 
     if (!pageParam) {
@@ -274,10 +278,10 @@ export default function App() {
             {[
               { id: null, label: "HOME", href: "/" },
               { id: null, label: "LIVE STREAM", badge: true, href: "/" },
-              { id: "cycling-today-live-stream", label: "CYCLING TODAY", href: "?page=cycling-today-live-stream" },
-              { id: "tiz-cycling-live", label: "TIZ CYCLING LIVE", href: "?page=tiz-cycling-live" },
-              { id: "about", label: "ABOUT", href: "?page=about" },
-              { id: "contact", label: "CONTACT", href: "?page=contact" },
+              { id: "cycling-today-live-stream", label: "CYCLING TODAY", href: "/?page=cycling-today-live-stream" },
+              { id: "tiz-cycling-live", label: "TIZ CYCLING LIVE", href: "/?page=tiz-cycling-live" },
+              { id: "about", label: "ABOUT", href: "/?page=about" },
+              { id: "contact", label: "CONTACT", href: "/?page=contact" },
             ].map((tab, idx) => {
               const isActive = (tab.id === null && currentPage === "home") ||
                                (tab.id === "cycling-today-live-stream" && currentPage === "seo-page" && selectedSEOPage?.slug === "cycling-today-live-stream") ||
@@ -565,6 +569,48 @@ export default function App() {
                   </p>
                 </div>
               </div>
+
+              {/* Indexable Broadcast Overview & Internal Links */}
+              <section className="bg-neutral-900 border border-neutral-800 rounded-lg p-5 flex flex-col gap-3">
+                <h2 className="font-display font-bold text-base text-white uppercase tracking-tight">
+                  Watch Cycling Today Live, Eurosport &amp; Tiz Cycling 2026 Streams
+                </h2>
+                <p className="text-neutral-400 text-xs leading-relaxed">
+                  Follow live UCI WorldTour stages, Grand Tours (Tour de France, Giro d&apos;Italia, Vuelta a España), Spring Monument Classics, and Road World Championships in high definition. Alongside our main Eurosport live player, explore curated guides for free-to-air TV broadcasters and official YouTube cycling streams worldwide.
+                </p>
+                <div className="flex flex-wrap gap-2 pt-1">
+                  <a
+                    href="/?page=cycling-today-live-stream"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigateTo("cycling-today-live-stream");
+                    }}
+                    className="inline-flex items-center gap-1.5 bg-neutral-950 hover:border-red-600 border border-neutral-800 text-neutral-200 hover:text-white text-xs font-mono px-3 py-1.5 rounded transition-all"
+                  >
+                    Cycling Today Live Guide
+                  </a>
+                  <a
+                    href="/?page=tiz-cycling-live"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigateTo("tiz-cycling-live");
+                    }}
+                    className="inline-flex items-center gap-1.5 bg-neutral-950 hover:border-red-600 border border-neutral-800 text-neutral-200 hover:text-white text-xs font-mono px-3 py-1.5 rounded transition-all"
+                  >
+                    Tiz Cycling Live 2026
+                  </a>
+                  <a
+                    href="/?page=watch-cycling-live-stream-free"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigateTo("watch-cycling-live-stream-free");
+                    }}
+                    className="inline-flex items-center gap-1.5 bg-neutral-950 hover:border-red-600 border border-neutral-800 text-neutral-200 hover:text-white text-xs font-mono px-3 py-1.5 rounded transition-all"
+                  >
+                    Watch Cycling Live Free
+                  </a>
+                </div>
+              </section>
             </motion.div>
           )}
         </AnimatePresence>
@@ -597,7 +643,17 @@ export default function App() {
 
             <div className="flex flex-wrap items-center gap-4 font-mono text-[10px]">
               <a
-                href="?page=tiz-cycling-live"
+                href="/?page=cycling-today-live-stream"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigateTo("cycling-today-live-stream");
+                }}
+                className="hover:text-white cursor-pointer"
+              >
+                Cycling Today Live
+              </a>
+              <a
+                href="/?page=tiz-cycling-live"
                 onClick={(e) => {
                   e.preventDefault();
                   navigateTo("tiz-cycling-live");
@@ -607,7 +663,7 @@ export default function App() {
                 Tiz Cycling Live
               </a>
               <a
-                href="?page=about"
+                href="/?page=about"
                 onClick={(e) => {
                   e.preventDefault();
                   navigateTo("about");
@@ -617,7 +673,7 @@ export default function App() {
                 About
               </a>
               <a
-                href="?page=contact"
+                href="/?page=contact"
                 onClick={(e) => {
                   e.preventDefault();
                   navigateTo("contact");
@@ -627,7 +683,7 @@ export default function App() {
                 Contact
               </a>
               <a
-                href="?page=legal-notice"
+                href="/?page=legal-notice"
                 onClick={(e) => {
                   e.preventDefault();
                   navigateTo("legal-notice");
@@ -637,7 +693,7 @@ export default function App() {
                 Legal Notice
               </a>
               <a
-                href="?page=privacy"
+                href="/?page=privacy"
                 onClick={(e) => {
                   e.preventDefault();
                   navigateTo("privacy");

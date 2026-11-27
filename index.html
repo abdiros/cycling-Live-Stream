@@ -4,32 +4,125 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="eVXYBl1iUH4gV0L7UUvDOT_9DrkDN5t4oRfJDMhaa6Q" />
-    <title>Cycling Live Stream</title>
-    <meta name="description" content="Modern live streaming platform for cycling races with interactive stage profiles, live fan chat, and SEO optimization guides." />
-    <meta name="keywords" content="cycling live stream, cyclinglivestream, watch cycling live free, pro cycling streaming, tour de france live stream, cycling tv online" />
+    <title>Cycling Live Stream – Watch Free Live Pro Cycling HD</title>
+    <meta
+      name="description"
+      content="Watch free live cycling streams, Eurosport race coverage, Grand Tours, and UCI WorldTour broadcasts in HD on cyclinglivestream.com."
+    />
+    <meta
+      name="keywords"
+      content="cycling live stream, cyclinglivestream, watch cycling live free, pro cycling streaming, tour de france live stream, cycling tv online, cycling today live, tiz cycling live"
+    />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <link rel="canonical" href="https://www.cyclinglivestream.com/" id="canonical-link" />
 
     <!-- Favicons -->
-    <link rel="icon" href="{{FAVICON_ICO_URL}}" sizes="any" />
-    <link rel="icon" type="image/png" sizes="32x32" href="{{FAVICON_32_URL}}" />
-    <link rel="apple-touch-icon" sizes="180x180" href="{{APPLE_TOUCH_ICON_URL}}" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.cyclinglivestream.com/" />
-    <meta property="og:title" content="Cycling Live Stream" />
-    <meta property="og:description" content="Modern live streaming platform for cycling races with interactive stage profiles, live fan chat, and SEO optimization guides." />
-    <meta property="og:image" content="{{OG_IMAGE_URL}}" />
+    <meta property="og:title" content="Cycling Live Stream – Watch Free Live Pro Cycling HD" />
+    <meta
+      property="og:description"
+      content="Watch free live cycling streams, Eurosport race coverage, Grand Tours, and UCI WorldTour broadcasts in HD on cyclinglivestream.com."
+    />
     <meta property="og:site_name" content="Cycling Live Stream" />
 
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Cycling Live Stream" />
-    <meta name="twitter:description" content="Modern live streaming platform for cycling races with interactive stage profiles, live fan chat, and SEO optimization guides." />
-    <meta name="twitter:image" content="{{OG_IMAGE_URL}}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Cycling Live Stream – Watch Free Live Pro Cycling HD" />
+    <meta
+      name="twitter:description"
+      content="Watch free live cycling streams, Eurosport race coverage, Grand Tours, and UCI WorldTour broadcasts in HD on cyclinglivestream.com."
+    />
     <meta name="twitter:url" content="https://www.cyclinglivestream.com/" />
+
+    <!-- Synchronous per-route canonical & metadata resolver for SPA indexing -->
+    <script>
+      (function () {
+        var base = "https://www.cyclinglivestream.com";
+        var params = new URLSearchParams(window.location.search);
+        var rawPage = params.get("page");
+        var legacy = {
+          "a-propos": "about",
+          "mentions-legales": "legal-notice",
+          "confidentialite": "privacy",
+          "cycling-today-live": "tiz-cycling-live",
+          "cyclisme-en-direct-streaming-gratuit": "watch-cycling-live-stream-free"
+        };
+        var page = rawPage ? (legacy[rawPage] || rawPage) : "";
+
+        var routes = {
+          "cycling-today-live-stream": {
+            title: "Cycling Today Live Stream – Free TV, Eurosport & YouTube HD",
+            desc: "Watch cycling today live with our free cycling live stream guide. Find live cycling today on TV, Eurosport live streams, YouTube feeds & Tiz-Cycling alternatives."
+          },
+          "tiz-cycling-live": {
+            title: "Tiz Cycling Live Stream 2026 – TV, YouTube, Tour de France & World Championship",
+            desc: "Watch Tiz Cycling live stream 2026 in HD. Find Tiz Cycling live today, Tiz Cycling TV, YouTube streams, Tour de France, World Championship & Tiz Cycling down backups."
+          },
+          "watch-cycling-live-stream-free": {
+            title: "Watch Cycling Live Stream Free - Pro Road Races in HD | cyclinglivestream.com",
+            desc: "Watch cycling live streams free online at cyclinglivestream.com. Follow Grand Tours, Spring Classics, and international road cycling races in HD."
+          },
+          "cycling-live-stream-free-online": {
+            title: "Cycling Live Stream Free Online - Watch Pro Cycling Races HD | cyclinglivestream.com",
+            desc: "Watch professional cycling live streams free online in Full HD on cyclinglivestream.com. Stream Grand Tours, Monument classics, and WorldTour races."
+          },
+          "reddit-cycling-streams-alternatives-2026": {
+            title: "Reddit Cycling Streams Alternatives - Free HD Live Stream 2026 | cyclinglivestream.com",
+            desc: "Find reliable alternatives to Reddit Cycling Streams on cyclinglivestream.com. Watch high-quality pro cycling direct video feeds."
+          },
+          "about": {
+            title: "About Us - Cycling Live Stream | cyclinglivestream.com",
+            desc: "Learn about Cycling Live Stream (cyclinglivestream.com), the independent live broadcast portal for professional road cycling."
+          },
+          "contact": {
+            title: "Contact - Cycling Live Stream | Support & Stream Reports",
+            desc: "Contact the Cycling Live Stream team at cyclinglivestream.com for inquiries, broken stream reports, or media partnerships."
+          },
+          "legal-notice": {
+            title: "Legal Notice - Cycling Live Stream | cyclinglivestream.com",
+            desc: "View the legal notice and terms of use for Cycling Live Stream (cyclinglivestream.com)."
+          },
+          "privacy": {
+            title: "Privacy Policy - Cycling Live Stream | cyclinglivestream.com",
+            desc: "Privacy policy and GDPR personal data protection disclosures for Cycling Live Stream (cyclinglivestream.com)."
+          }
+        };
+
+        var canonicalUrl = base + "/";
+        var meta = routes[page];
+        if (meta) {
+          canonicalUrl = base + "/?page=" + encodeURIComponent(page);
+          document.title = meta.title;
+          var setContent = function (sel, val) {
+            var el = document.querySelector(sel);
+            if (el) el.setAttribute("content", val);
+          };
+          setContent('meta[name="description"]', meta.desc);
+          setContent('meta[property="og:title"]', meta.title);
+          setContent('meta[property="og:description"]', meta.desc);
+          setContent('meta[name="twitter:title"]', meta.title);
+          setContent('meta[name="twitter:description"]', meta.desc);
+        }
+
+        var ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) ogUrl.setAttribute("content", canonicalUrl);
+        var twUrl = document.querySelector('meta[name="twitter:url"]');
+        if (twUrl) twUrl.setAttribute("content", canonicalUrl);
+
+        var link = document.getElementById("canonical-link");
+        if (!link) {
+          link = document.createElement("link");
+          link.id = "canonical-link";
+          link.rel = "canonical";
+          document.head.appendChild(link);
+        }
+        link.href = canonicalUrl;
+      })();
+    </script>
 
     <!-- Schema.org JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -39,7 +132,7 @@
         "name": "Cycling Live Stream",
         "alternateName": "cyclinglivestream.com",
         "url": "https://www.cyclinglivestream.com/",
-        "description": "Modern live streaming platform for cycling races with interactive stage profiles, live fan chat, and SEO optimization guides.",
+        "description": "Watch free live cycling streams, Eurosport race coverage, Grand Tours, and UCI WorldTour broadcasts in HD on cyclinglivestream.com.",
         "potentialAction": {
           "@type": "SearchAction",
           "target": "https://www.cyclinglivestream.com/?q={search_term_string}",
@@ -52,7 +145,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Cycling Live Stream",
-        "url": "https://cyclinglivestream.com/",
+        "url": "https://www.cyclinglivestream.com/",
         "description": "Free live cycling video & HD race streaming",
         "applicationCategory": "SportsApplication",
         "operatingSystem": "Web",
@@ -63,13 +156,13 @@
         "publisher": {
           "@type": "Organization",
           "name": "cycling",
-          "url": "https://cyclinglivestream.com/",
+          "url": "https://www.cyclinglivestream.com/",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://cyclinglivestream.com/logo.png"
+            "url": "https://www.cyclinglivestream.com/favicon.ico"
           }
         },
-        "logo": "https://cyclinglivestream.com/logo.png",
+        "logo": "https://www.cyclinglivestream.com/favicon.ico",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -79,8 +172,28 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main>
+        <h1>Cycling Live Stream – Watch Free Live Pro Cycling in HD</h1>
+        <p>
+          Watch free live cycling streams, Eurosport live road race coverage, UCI WorldTour stages, Spring Classics, and Grand Tours in HD on cyclinglivestream.com.
+        </p>
+        <nav aria-label="Cycling Live Stream Guides">
+          <ul>
+            <li><a href="https://www.cyclinglivestream.com/">Home – Live Cycling Player</a></li>
+            <li><a href="https://www.cyclinglivestream.com/?page=cycling-today-live-stream">Cycling Today Live Stream – Free TV, Eurosport &amp; YouTube HD</a></li>
+            <li><a href="https://www.cyclinglivestream.com/?page=tiz-cycling-live">Tiz Cycling Live Stream 2026 – TV, YouTube &amp; Tour de France</a></li>
+            <li><a href="https://www.cyclinglivestream.com/?page=watch-cycling-live-stream-free">Watch Cycling Live Stream Free</a></li>
+            <li><a href="https://www.cyclinglivestream.com/?page=cycling-live-stream-free-online">Cycling Live Stream Free Online HD</a></li>
+            <li><a href="https://www.cyclinglivestream.com/?page=reddit-cycling-streams-alternatives-2026">Reddit Cycling Streams Alternatives 2026</a></li>
+            <li><a href="https://www.cyclinglivestream.com/?page=about">About Cycling Live Stream</a></li>
+            <li><a href="https://www.cyclinglivestream.com/?page=contact">Contact Support</a></li>
+            <li><a href="https://www.cyclinglivestream.com/?page=legal-notice">Legal Notice</a></li>
+            <li><a href="https://www.cyclinglivestream.com/?page=privacy">Privacy Policy</a></li>
+          </ul>
+        </nav>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

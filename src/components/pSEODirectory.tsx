@@ -47,7 +47,7 @@ export default function PSEODirectory({ activeSlug, searchQuery = "", onSelectSE
             return (
               <a
                 key={page.slug}
-                href={`?page=${page.slug}`}
+                href={`/?page=${page.slug}`}
                 onClick={(e) => {
                   e.preventDefault();
                   onSelectSEOPage(isActive ? null : page);
